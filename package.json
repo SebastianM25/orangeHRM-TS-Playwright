@@ -6,10 +6,13 @@
   "scripts": {
     "test": "playwright test",
     "test:headed": "playwright test --headed",
-    "test:ui": "playwright test tests/login.spec.ts --ui"
+    "test:ui": "playwright test tests/login.spec.ts --ui",
+    "docker:build": "docker build -t orangehrm-playwright .",
+    "docker:test": "docker run --rm --env-file .env orangehrm-playwright npx playwright test",
+    "docker:test:login": "docker run --rm --env-file .env orangehrm-playwright npx playwright test tests/login.spec.ts"
   },
   "devDependencies": {
-    "@playwright/test": "^1.54.2",
+    "@playwright/test": "1.59.1",
     "@types/node": "^24.5.2",
     "dotenv": "^17.2.2",
     "typescript": "^5.9.2"
