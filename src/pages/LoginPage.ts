@@ -14,8 +14,10 @@ export class LoginPage {
   }
 
   async gotoLoginPage(): Promise<void> {
+    const baseUrl = process.env.BASE_URL ?? "https://opensource-demo.orangehrmlive.com";
     const loginPath = process.env.LOGIN_PATH ?? "/web/index.php/auth/login";
-    await this.page.goto(loginPath);
+    const loginUrl = loginPath.startsWith("http") ? loginPath : new URL(loginPath, baseUrl).toString();
+    await this.page.goto(loginUrl);
     await this.usernameInput.waitFor({ state: "visible" });
   }
 
