@@ -1,0 +1,17 @@
+{
+  "name": "orangehrm-ts-playwright",
+  "version": "1.0.0",
+  "private": true,
+  "description": "OrangeHRM login tests using Playwright, TypeScript, POM and Page Factory",
+  "scripts": {
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "test:ui": "playwright test tests/login.spec.ts --ui"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.54.2",
+    "@types/node": "^24.5.2",
+    "dotenv": "^17.2.2",
+    "typescript": "^5.9.2"
+  }
+}
