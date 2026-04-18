@@ -5,12 +5,16 @@ export class LoginPage {
   readonly usernameInput: Locator;
   readonly passwordInput: Locator;
   readonly loginButton: Locator;
+  readonly invalidCredentialsMessage: Locator;
+  readonly requiredFieldMessages: Locator;
 
   constructor(page: Page) {
     this.page = page;
     this.usernameInput = page.locator("input[name='username'][placeholder='Username']");
     this.passwordInput = page.locator("input[name='password'][placeholder='Password']");
     this.loginButton = page.locator("button[type='submit'].orangehrm-login-button");
+    this.invalidCredentialsMessage = page.locator(".oxd-alert-content-text").filter({ hasText: "Invalid credentials" });
+    this.requiredFieldMessages = page.locator(".oxd-input-field-error-message", { hasText: "Required" });
   }
 
   async gotoLoginPage(): Promise<void> {
@@ -24,6 +28,10 @@ export class LoginPage {
   async login(username: string, password: string): Promise<void> {
     await this.usernameInput.fill(username);
     await this.passwordInput.fill(password);
+    await this.loginButton.click();
+  }
+
+  async submitEmptyLoginForm(): Promise<void> {
     await this.loginButton.click();
   }
 }

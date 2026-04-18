@@ -16,3 +16,35 @@ test("OrangeHRM login redirects to dashboard", async ({ page }) => {
   await dashboardPage.waitForDashboardLoaded();
   await expect(dashboardPage.dashboardHeader).toBeVisible();
 });
+
+test("OrangeHRM login fails with invalid password", async ({ page }) => {
+  const dashboardPath = process.env.DASHBOARD_PATH ?? "/web/index.php/dashboard/index";
+  const loginPage = PageFactory.loginPage(page);
+
+  await loginPage.gotoLoginPage();
+  await loginPage.login("Admin", "wrong-password");
+
+  await expect(loginPage.invalidCredentialsMessage).toBeVisible();
+  await expect(loginPage.invalidCredentialsMessage).toHaveText(/Invalid credentials/);
+  await expect(page).not.toHaveURL(new RegExp(`${dashboardPath}$`));
+});
+
+test("OrangeHRM login requires a username", async ({ page }) => {
+  const loginPage = PageFactory.loginPage(page);
+
+  await loginPage.gotoLoginPage();
+  await loginPage.login("", "admin123");
+
+  await expect(loginPage.requiredFieldMessages).toHaveCount(1);
+  await expect(loginPage.requiredFieldMessages.first()).toHaveText("Required");
+});
+
+test("OrangeHRM login requires both fields when submitted empty", async ({ page }) => {
+  const loginPage = PageFactory.loginPage(page);
+
+  await loginPage.gotoLoginPage();
+  await loginPage.submitEmptyLoginForm();
+
+  await expect(loginPage.requiredFieldMessages).toHaveCount(2);
+  await expect(loginPage.requiredFieldMessages).toHaveText(["Required", "Required"]);
+});
