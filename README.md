@@ -1,5 +1,30 @@
 # orangeHRM-TS-Playwright-
 
+## Run tests in GitHub Actions
+
+The project includes a GitHub Actions workflow at `.github/workflows/playwright.yml`.
+
+It runs automatically on:
+- push to `main` or `master`
+- every pull request
+- manual trigger from the `Actions` tab via `workflow_dispatch`
+
+Default execution uses the OrangeHRM public demo:
+- `BASE_URL=https://opensource-demo.orangehrmlive.com`
+- `ORANGE_USERNAME=Admin`
+- `ORANGE_PASSWORD=admin123`
+
+If you want to run against another environment, add these repository secrets in GitHub:
+- `BASE_URL`
+- `LOGIN_PATH`
+- `DASHBOARD_PATH`
+- `ORANGE_USERNAME`
+- `ORANGE_PASSWORD`
+
+After each run, GitHub Actions uploads:
+- `playwright-report`
+- `test-results`
+
 ## Run tests with Docker
 
 1. Create `.env` from `.env.example` and set credentials.
