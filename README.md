@@ -20,3 +20,12 @@ For any specific test file, use:
 - `make test` - run all tests
 - `make test-login` - run only login test
 - `make test-file TEST=tests/<file>.spec.ts` - run a specific test file
+
+## Git Hooks
+
+This repo includes a tracked `pre-commit` hook in `.githooks/pre-commit`.
+
+Enable it once in your local clone:
+- `git config core.hooksPath .githooks`
+
+After that, `git commit` will run `npx playwright test` before the commit is created.
